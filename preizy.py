@@ -94,6 +94,30 @@ async def on_message(message):
         emb.set_footer(text='------------------------')
         await bot.send_message(message.channel, embed=emb)
     
+
+@bot.event
+async def on_message(message):
+    if message.content.startswith(">>info"):
+        emb = discord.Embed(title="COMMANDS", description="Check my commands!", colour=0x95a5a6)
+        emb.add_field(name='------------------------', value=":notepad_spiral:  >>commands\n"
+                      "Shows this message\n"
+                      "\n"
+                      ":notepad_spiral: >>add {number} {number}\n"
+                      ":notepad_spiral: >>sub {number} {number}\n"
+                      ":notepad_spiral: >>mul {number} {number}\n"
+                      ":notepad_spiral: >>div {number} {number}\n"
+                      "\n"
+                      ":notepad_spiral: >>roll {number} {number}\n"
+                      "Choose between two numbers\n"
+                      "\n"
+                      ":notepad_spiral: >>nick {name}\n"
+                      "Set your nickname\n"
+                      "\n"
+                      ":notepad_spiral: >>game {game}\n"
+                      "Set a game for the Bot", inline=True)
+        emb.set_thumbnail(url="https://cdn.discordapp.com/avatars/450246060456148993/b9fc7c3ec4dc905cc575ab313a7dba0c.webp?size=2048")
+        emb.set_footer(text='------------------------')
+        await bot.send_message(message.channel, embed=emb)
     
     
 token = os.environ.get('DISCORD_TOKEN')
