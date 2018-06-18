@@ -95,10 +95,7 @@ async def on_message(message):
         await bot.send_message(message.channel, embed=emb)
     
     if message.content.startswith(">>ping"):
-        emb2 = discord.Embed()
-        emb2.add_field()
-        "Ping!"
-        await bot.send_message(message.channel, embed=emb2)
+        await bot.process_commands("ping")
     #rettend pls help how to make bot chat
 token = os.environ.get('DISCORD_TOKEN')
 bot.run(token)
