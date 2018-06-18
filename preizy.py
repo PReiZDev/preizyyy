@@ -8,7 +8,11 @@ server = discord.Server
 member = discord.Member
 user = discord.User
 permissions = discord.Permissions
-timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+"""
+Write this when you need the command's triggered time in UTC
+
+timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
+
 bot.remove_command("help")
 
 @bot.event
@@ -68,6 +72,11 @@ async def game(play):
     await bot.say(embed=em)
 
 @bot.command(pass_context=True)
+async def time(ctx):
+    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+    await bot.say(f"**{ctx.message.author.mention}, the time is __{timer}__**")
+
+@bot.command(pass_context=True)
 async def nick(ctx, name):
     await bot.change_nickname(ctx.message.author, name)
     em = discord.Embed(title="Nickname", description=f"{ctx.message.author}'s nick set to __{name}__!", colour=0x95a5a6)
@@ -90,6 +99,9 @@ async def on_message(message):
                       "\n"
                       ":notepad_spiral: >>nick {name}\n"
                       "Set your nickname\n"
+                      "\n"
+                      ":notepad_spiral: >>time\n"
+                      "Returns the real time in UTC+0\n"
                       "\n"
                       ":notepad_spiral: >>game {game}\n"
                       "Set a game for the Bot", inline=True)
