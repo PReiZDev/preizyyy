@@ -21,42 +21,42 @@ async def roll(ctx, x : int, y : int):
     msg = random.randint(x, y)
     text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
     await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, my choose: {msg}**")
+    await bot.edit_message(text, f"**My choose: {msg}**")
 
 @bot.command(pass_context=True)
 async def sub(ctx, x : int, y : int):
     msg = x - y
     text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
     await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    await bot.edit_message(text, f"**Tthe result: {msg}**")
     
 @bot.command(pass_context=True)
 async def mul(ctx, x : int, y : int):
     msg = x * y
     text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
     await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    await bot.edit_message(text, f"**The result: {msg}**")
     
 @bot.command(pass_context=True)
 async def div(ctx, x : int, y : int):
     msg = x / y
     text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
     await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    await bot.edit_message(text, f"**The result: {msg}**")
     
 @bot.command(pass_context=True)
 async def exp(ctx, x : int, y : int):
     msg = x ** y
     text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
     await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    await bot.edit_message(text, f"**The result: {msg}**")
     
 @bot.command(pass_context=True)
 async def add(ctx, x : int, y : int):
     msg = x + y
     text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
     await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    await bot.edit_message(text, f"**The result: {msg}**")
     
 @bot.command()
 async def game(play):
@@ -93,9 +93,12 @@ async def on_message(message):
         emb.set_thumbnail(url="https://cdn.discordapp.com/avatars/450246060456148993/b9fc7c3ec4dc905cc575ab313a7dba0c.webp?size=2048")
         emb.set_footer(text='------------------------')
         await bot.send_message(message.channel, embed=emb)
-    
-    if message.content.startswith(">>ping"):
-        await bot.process_commands("ping")
-    #rettend pls help how to make bot chat
+    await bot.process_commands(message) #IMPORTANT
+
+
+
+
+
+
 token = os.environ.get('DISCORD_TOKEN')
 bot.run(token)
