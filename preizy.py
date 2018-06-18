@@ -72,11 +72,6 @@ async def game(play):
     await bot.say(embed=em)
 
 @bot.command(pass_context=True)
-async def time(ctx):
-    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-    await bot.say(f"**{ctx.message.author.mention}, the time is __{timer}__**")
-
-@bot.command(pass_context=True)
 async def nick(ctx, name):
     await bot.change_nickname(ctx.message.author, name)
     em = discord.Embed(title="Nickname", description=f"{ctx.message.author}'s nick set to __{name}__!", colour=0x95a5a6)
@@ -84,6 +79,9 @@ async def nick(ctx, name):
 
 @bot.event
 async def on_message(message):
+    if message.content.startswith(">>time"):
+        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+        await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
     if message.content.startswith(">>commands"):
         emb = discord.Embed(title="COMMANDS", description="Check my commands!", colour=0x95a5a6)
         emb.add_field(name='------------------------', value=":notepad_spiral:  >>commands\n"
