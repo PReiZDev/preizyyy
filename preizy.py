@@ -7,6 +7,8 @@ server = discord.Server
 member = discord.Member
 user = discord.User
 permissions = discord.Permissions
+timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+bot.remove_command("help")
 
 @bot.event
 async def on_ready():
