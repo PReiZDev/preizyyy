@@ -1,4 +1,5 @@
 import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math
+from time import gmtime
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='>>', description=None)
