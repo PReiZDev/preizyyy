@@ -79,6 +79,34 @@ async def nick(ctx, name):
 
 @bot.event
 async def on_message(message):
+    if message.content.startswith('>>8ball'):
+        await bot.send_message(message.channel, random.choice(['**It is certain :8ball:**',
+                                                              '**It is decidedly so :8ball:**',
+                                                              '**Without a doubt :8ball:**',
+                                                              '**No U :8ball:**',
+                                                              '**Boi, go sleep... :8ball:**',
+                                                              '**As i see it, yes :8ball:**',
+                                                              '**As i see it, *No U*   :8ball:**',
+                                                              '**Most likely :8ball:**',
+                                                              '**Outlook good :8ball:**',
+                                                              '**Yes :8ball:**',
+                                                              '**Signs point to yes :8ball:**',
+                                                              '**Reply hazy try again :8ball:**',
+                                                              '**Ask again later, nub :8ball:**',
+                                                              '**Better not tell you :8ball:**',
+                                                              '**Cannot predict now :8ball:**',
+                                                              '**Concentrate and ask again :8ball:**',
+                                                              '**8ball.exe not found :8ball:**',
+                                                              '**Dont count on it :8ball:**',
+                                                              '**My reply is no :8ball:**',
+                                                              '**My sources say no :8ball:**',
+                                                              '**Outloook not so good :8ball:**',
+                                                              '**Very doubtful :8ball:**',
+                                                              '**Ha! :8ball:**',
+                                                              '**Ask it to ur mum :8ball:**',
+                                                              '**o** :8ball:',
+                                                              '**ask it to PReiZ** :8ball:',
+                                                              '***REEEE* :8ball:**',]))
     if message.content.startswith(">>time"):
         timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
@@ -102,7 +130,10 @@ async def on_message(message):
                       "Returns the real time in UTC+0\n"
                       "\n"
                       ":notepad_spiral: >>game {game}\n"
-                      "Set a game for the Bot", inline=True)
+                      "Set a game for the Bot\n"
+                      "\n"
+                      ":notepad_spiral: >>8ball\n"
+                      "Get answer (or not :>  ) to your question", inline=True)
         emb.set_thumbnail(url="https://cdn.discordapp.com/avatars/450246060456148993/b9fc7c3ec4dc905cc575ab313a7dba0c.webp?size=2048")
         emb.set_footer(text='------------------------')
         await bot.send_message(message.channel, embed=emb)
