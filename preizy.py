@@ -15,6 +15,43 @@ timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
 
 bot.remove_command("help")
 
+#----------------------Stats-----------------------
+@bot.listen()
+async def on_member_join(member):
+    botserver = bot.get_server(id="411833498207256576")
+    membersroom = bot.get_channel(id="460456526449082378")
+    await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
+
+@bot.listen()
+async def on_member_remove(member):
+    botserver = bot.get_server(id="411833498207256576")
+    membersroom = bot.get_channel(id="460456526449082378")
+    await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
+@bot.event
+async def on_server_role_create(role):
+    botserver = bot.get_server(id="411833498207256576")
+    rolesroom = bot.get_channel(id="460456598473670696")
+    await bot.edit_channel(rolesroom, name=f"🔴Roles: {len(botserver.roles)}")  
+
+@bot.event
+async def on_server_role_delete(role):
+    botserver = bot.get_server(id="411833498207256576")
+    rolesroom = bot.get_channel(id="460456598473670696")
+    await bot.edit_channel(rolesroom, name=f"🔴Roles: {len(botserver.roles)}")  
+
+@bot.event
+async def on_channel_create(channel):
+    botserver = bot.get_server(id="411833498207256576")
+    channelsroom = bot.get_channel(id="460456375999266826")
+    await bot.edit_channel(channelsroom, name=f"🔵Channels: {len(botserver.channels)}")
+
+@bot.event
+async def on_channel_delete(channel):
+    botserver = bot.get_server(id="411833498207256576")
+    channelsroom = bot.get_channel(id="460456375999266826")
+    await bot.edit_channel(channelsroom, name=f"🔵Channels: {len(botserver.channels)}")
+#--------------------------------------------------
+
 #--------------------Moderation--------------------
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
@@ -181,7 +218,7 @@ async def unlock(ctx, Reason):
     timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
     em.set_footer(text=timer)
     await bot.send_message(LogRoom, embed=em)
-#---------------------------------------------------
+#--------------------------------------------------
 @bot.event
 async def on_ready():
     print('Logged in as')
