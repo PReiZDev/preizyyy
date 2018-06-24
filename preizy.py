@@ -138,7 +138,7 @@ async def clear(ctx, number : int):
     LogRoom = bot.get_channel(id="412146516246003723")
     em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
     em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-    em.add_field(name="Channel", value=f"{ctx.message.channel}")
+    em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
     timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
     em.set_footer(text=timer)
     msg = await bot.send_message(ctx.message.channel, embed=em)
