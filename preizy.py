@@ -153,7 +153,7 @@ async def lock(ctx, Reason):
     overwrite = discord.PermissionOverwrite()
     overwrite.send_messages = False
     await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
-    await bot.send_message(room, f"**{ctx.message.channel.mention} is now locked!**")
+    await bot.send_message(ctx.message.channel, f"**{ctx.message.channel.mention} is now locked for __{Reason}__**")
     LogRoom = bot.get_channel(id="412146516246003723")
     em = discord.Embed(title="╲⎝⧹𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x1f8b4c)
     em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
@@ -171,7 +171,7 @@ async def unlock(ctx):
     overwrite = discord.PermissionOverwrite()
     overwrite.send_messages = True
     await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
-    await bot.send_message(room, f"**{ctx.message.channel.mention} is now unlocked, feel free to chat!**")
+    await bot.send_message(ctx.message.channel, f"**{ctx.message.channel.mention} is now unlocked for __{Reason}__**")
     LogRoom = bot.get_channel(id="412146516246003723")
     em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x2ecc71)
     em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
