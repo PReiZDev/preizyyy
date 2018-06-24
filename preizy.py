@@ -166,7 +166,7 @@ async def lock(ctx, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_channels=True)
-async def unlock(ctx):
+async def unlock(ctx, Reason):
     Registered = discord.utils.get(ctx.message.server.roles, name="Member")
     overwrite = discord.PermissionOverwrite()
     overwrite.send_messages = True
