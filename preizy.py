@@ -138,6 +138,7 @@ async def clear(ctx, number : int):
     LogRoom = bot.get_channel(id="412146516246003723")
     em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
     em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+    em.add_field(name="Channel", value=f"{ctx.message.channel}")
     timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
     em.set_footer(text=timer)
     msg = await bot.send_message(ctx.message.channel, embed=em)
@@ -278,25 +279,25 @@ async def on_message(message):
         await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
     if message.content.startswith(">>mod"):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
-        em.add_field(name="Admin commands", value=":small_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
-                     ":black_small_square: Kicks the user and removes his messages for the given days, the user can't rejoin, until he gots unbanned\n"
+        em.add_field(name="Admin commands", value=":notepad_spiral: >>ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
+                     ":bulb: Kicks the user and removes his messages for the given days, the user can't rejoin, until he gots unbanned\n"
                      "\n"
-                     ":small_orange_diamond: r-unban {member} \"{Reason}\"\n"
-                     ":black_small_square: UnBans the Banned user, the user now can rejoin by instant-invite links\n\n\n")
-        em.add_field(name="Mod commands", value=":small_blue_diamond: r-kick {member} \"{Reason}\"\n"
-                     ":black_small_square: Kicks the user from the server, the user can rejoin by instant-invite links\n"
+                     ":notepad_spiral: >>unban {member} \"{Reason}\"\n"
+                     ":bulb: UnBans the Banned user, the user now can rejoin by instant-invite links\n\n\n")
+        em.add_field(name="Mod commands", value=":notepad_spiral: >>kick {member} \"{Reason}\"\n"
+                     ":bulb: Kicks the user from the server, the user can rejoin by instant-invite links\n"
                      "\n"
-                     ":small_orange_diamond: r-mute {member} {duration(in sec)} \"{Reason}\"\n"
-                     ":black_small_square: Mutes the user, this user can't send messages for the given duration, if the _time is up,_ he will auto get unmuted\n"
+                     ":notepad_spiral: >>mute {member} {duration(in sec)} \"{Reason}\"\n"
+                     ":bulb: Mutes the user, this user can't send messages for the given duration, if the _time is up,_ he will auto get unmuted\n"
                      "\n"
-                     ":small_blue_diamond: r-unmute {member} \"{Reason}\"\n"
-                     ":black_small_square: UnMutes the Muted user, this user now allowed to send messages\n"
+                     ":notepad_spiral: >>unmute {member} \"{Reason}\"\n"
+                     ":bulb: UnMutes the Muted user, this user now allowed to send messages\n"
                      "\n"
-                     ":small_orange_diamond: r-lock\n"
-                     ":black_small_square: Locks down the currently channel, only Admins can send messages until an unlock\n"
+                     ":notepad_spiral: >>lock \"{Reason}\"\n"
+                     ":bulb: Locks down the currently channel, only Admins can send messages until an unlock\n"
                      "\n"
-                     ":small_blue_diamond: r-unlock\n"
-                     ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there")
+                     ":notepad_spiral: >>unlock \"{Reason}\"\n"
+                     ":bulb: Unlocks the currently locked channel, now everyone can send messages there")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith(">>commands"):
         emb = discord.Embed(title="COMMANDS", description="Check my commands!", colour=0x95a5a6)
@@ -309,19 +310,19 @@ async def on_message(message):
                       ":notepad_spiral: >>div {number} {number}\n"
                       "\n"
                       ":notepad_spiral: >>roll {number} {number}\n"
-                      "Choose between two numbers\n"
+                      ":bulb: Choose between two numbers\n"
                       "\n"
                       ":notepad_spiral: >>nick {name}\n"
-                      "Set your nickname\n"
+                      ":bulb: Set your nickname\n"
                       "\n"
                       ":notepad_spiral: >>time\n"
-                      "Returns the real time in UTC+0\n"
+                      ":bulb: Returns the real time in UTC+0\n"
                       "\n"
                       ":notepad_spiral: >>game {game}\n"
-                      "Set a game for the Bot\n"
+                      ":bulb: Set a game for the Bot\n"
                       "\n"
                       ":notepad_spiral: >>8ball\n"
-                      "Get answer (or not :>  ) to your question", inline=True)
+                      ":bulb: Get answer (or not :>  ) to your question", inline=True)
         emb.set_thumbnail(url="https://cdn.discordapp.com/avatars/450246060456148993/b9fc7c3ec4dc905cc575ab313a7dba0c.webp?size=2048")
         emb.set_footer(text='------------------------')
         await bot.send_message(message.channel, embed=emb)
