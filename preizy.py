@@ -15,6 +15,13 @@ timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
 
 bot.remove_command("help")
 
+@bot.event
+async def on_ready():
+    print('Logged in as')
+    print(bot.user.name)
+    print(bot.user.id)
+    print('------')
+    await bot.change_presence(game=discord.Game(name="diep.io"))
 #----------------------Stats-----------------------
 @bot.listen()
 async def on_member_join(member):
@@ -55,7 +62,7 @@ async def on_channel_delete(channel):
 #--------------------Moderation--------------------
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
-async def ban(ctx, user : discord.User, Day : int, Reason):
+async def ban(ctx, user : discord.User, Day : int, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -75,7 +82,7 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
-async def unban(ctx, user : discord.User, Reason):
+async def unban(ctx, user : discord.User, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -98,7 +105,7 @@ async def unban(ctx, user : discord.User, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
-async def kick(ctx, user : discord.User, Reason):
+async def kick(ctx, user : discord.User, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -117,7 +124,7 @@ async def kick(ctx, user : discord.User, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
-async def mute(ctx, user : discord.User, duration : int, Reason):
+async def mute(ctx, user : discord.User, duration : int, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -148,7 +155,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
-async def unmute(ctx, user : discord.User, Reason):
+async def unmute(ctx, user : discord.User, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -185,7 +192,7 @@ async def clear(ctx, number : int):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_channels=True)
-async def lock(ctx, Reason):
+async def lock(ctx, *, Reason):
     Registered = discord.utils.get(ctx.message.server.roles, name="Member")
     overwrite = discord.PermissionOverwrite()
     overwrite.send_messages = False
@@ -203,7 +210,7 @@ async def lock(ctx, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_channels=True)
-async def unlock(ctx, Reason):
+async def unlock(ctx, *, Reason):
     Registered = discord.utils.get(ctx.message.server.roles, name="Member")
     overwrite = discord.PermissionOverwrite()
     overwrite.send_messages = True
@@ -219,14 +226,10 @@ async def unlock(ctx, Reason):
     em.set_footer(text=timer)
     await bot.send_message(LogRoom, embed=em)
 #--------------------------------------------------
-@bot.event
-async def on_ready():
-    print('Logged in as')
-    print(bot.user.name)
-    print(bot.user.id)
-    print('------')
-    await bot.change_presence(game=discord.Game(name="diep.io"))
-
+@bot.command(pass_context=True)
+async def say(ctx, *, words):
+    await bot.say(f"**{words}**")
+    
 @bot.command(pass_context=True)
 async def roll(ctx, x : int, y : int):
     msg = random.randint(x, y)
@@ -270,13 +273,13 @@ async def add(ctx, x : int, y : int):
     await bot.edit_message(text, f"**The result: {msg}**")
     
 @bot.command()
-async def game(play):
+async def game(*, play):
     await bot.change_presence(game=discord.Game(name=play))
     em = discord.Embed(title="Game Status", description=f"Game status changed to __{play}__!", colour=0x95a5a6)
     await bot.say(embed=em)
 
 @bot.command(pass_context=True)
-async def nick(ctx, name):
+async def nick(ctx, *, name):
     await bot.change_nickname(ctx.message.author, name)
     em = discord.Embed(title="Nickname", description=f"{ctx.message.author}'s nick set to __{name}__!", colour=0x95a5a6)
     await bot.say(embed=em)
@@ -357,6 +360,9 @@ async def on_message(message):
                       "\n"
                       ":notepad_spiral: >>game {game}\n"
                       ":bulb: Set a game for the Bot\n"
+                      "\n"
+                      ":notepad_spiral: >>say {something}\n"
+                      ":bulb: the bot will repeats you\n"
                       "\n"
                       ":notepad_spiral: >>8ball\n"
                       ":bulb: Get answer (or not :>  ) to your question", inline=True)
