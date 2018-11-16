@@ -262,17 +262,17 @@ async def unlock(ctx, *, Reason=None):
     
 #--------------------------------------------------
 @bot.command(pass_context=True)
-async def luck(ctx, luck : int=None):
-    if luck is None:
+async def luck(ctx, fortune : int=None):
+    if fortune is None:
         await bot.reply("**The usage is `>>luck {Luck-level}`**")
     else:
         await bot.say("**Try your luck!\nGet Ready!**")
         asyncio.sleep(1)
         luck = []
         for i in range(10):
-            luck.append(Luck level += i)
+            luck.append(fortune)
         luck = random.choice(luck)
-        if luck<0:
+        if fortune<0:
             msg = "WIN!"
         else:
             msg = "LOSE!"
