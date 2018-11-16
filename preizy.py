@@ -262,6 +262,23 @@ async def unlock(ctx, *, Reason=None):
     
 #--------------------------------------------------
 @bot.command(pass_context=True)
+async def luck(ctx, luck : int=None):
+    if luck is None:
+        await bot.reply("**The usage is `>>luck {Luck-level}`**")
+    else:
+        await bot.say("**Try your luck!\nGet Ready!**")
+        asyncio.sleep(1)
+        luck = []
+        for i in range(10):
+            luck.append(Luck level += i)
+        luck = random.choice(luck)
+        if luck<0:
+            msg = "WIN!"
+        else:
+            msg = "LOSE!"
+        print(msg)
+
+@bot.command(pass_context=True)
 async def ping(ctx):
     before = time.monotonic()
     embed = discord.Embed(description=":ping_pong: **...**", colour=0x3498db)
