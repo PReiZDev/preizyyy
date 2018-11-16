@@ -262,21 +262,17 @@ async def unlock(ctx, *, Reason=None):
     
 #--------------------------------------------------
 @bot.command(pass_context=True)
-async def luck(ctx, fortune : int=None):
-    if fortune is None:
-        await bot.reply("**The usage is `>>luck {Luck-level}`**")
-    else:
-        await bot.say("**Try your luck!\nGet Ready!**")
-        asyncio.sleep(1)
-        luck = []
-        for i in range(10):
-            luck.append(fortune)
-        luck = random.choice(luck)
-        if fortune<0:
-            msg = "WIN!"
-        else:
-            msg = "LOSE!"
-        print(msg)
+async def shift(ctx):
+    words = ["chicken", "no u", "what?", "u wot", "hippo", "crab", "teddy", "Rettend", "PReiZy", "PReiZ", "javascript", "diep.io", "update"]
+    word = random.choice(words)
+    word = list(word)
+    word = random.shuffle(word)
+    e = discord.Embed(title="", description=word, colour=0x607d8b)
+    await bot.say("**Try yourself!\nGet Ready!**")
+    asyncio.sleep(1)
+    await bot.say(embed=e)
+    await bot.wait_for_message(author=ctx.message.author, content=word)
+    await bot.send_message(ctx.message.channel, "**Correct!**")
 
 @bot.command(pass_context=True)
 async def ping(ctx):
