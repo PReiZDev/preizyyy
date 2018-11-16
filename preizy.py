@@ -268,7 +268,7 @@ async def shift(ctx):
     text = list(word)
     random.shuffle(text)
     text = str(text)
-    text = str(text).strip('[, ]')
+    text = re.sub("[],'' ", "", text)
     e = discord.Embed(title="", description=f"*{text}*", colour=0x607d8b)
     await bot.say("**Try yourself!\nGet Ready!**")
     asyncio.sleep(2)
