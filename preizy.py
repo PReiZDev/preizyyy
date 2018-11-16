@@ -266,7 +266,7 @@ async def shift(ctx):
     words = ["chicken", "no u", "what?", "u wot", "hippo", "crab", "teddy", "Rettend", "PReiZy", "PReiZ", "javascript", "diep.io", "update"]
     word = random.choice(words)
     text = list(word)
-    text = random.shuffle(text)
+    random.shuffle(text)
     text = str(text)
     e = discord.Embed(title="", description=f"*{text}*", colour=0x607d8b)
     await bot.say("**Try yourself!\nGet Ready!**")
