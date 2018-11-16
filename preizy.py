@@ -270,10 +270,14 @@ async def shift(ctx):
     text = str(text)
     e = discord.Embed(title="", description=f"*{text}*", colour=0x607d8b)
     await bot.say("**Try yourself!\nGet Ready!**")
-    asyncio.sleep(1)
+    asyncio.sleep(2)
     await bot.say(embed=e)
     await bot.wait_for_message(author=ctx.message.author, content=text)
     await bot.send_message(ctx.message.channel, f"**The word was {word}**")
+
+@bot.command(pass_context=True)
+async def tag(ctx):
+    await bot.say("**[ρπ]**")
 
 @bot.command(pass_context=True)
 async def ping(ctx):
@@ -512,6 +516,8 @@ async def on_message(message):
                       "Shows this message\n"
                       "\n"
                       ":notepad_spiral: >>help\n"
+                      "\n"
+                      ":notepad_spiral: >>tag\n"
                       "\n"
                       ":notepad_spiral: >>nick {name}\n"
                       ":bulb: Set your nickname\n"
