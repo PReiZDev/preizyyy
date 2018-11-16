@@ -265,14 +265,15 @@ async def unlock(ctx, *, Reason=None):
 async def shift(ctx):
     words = ["chicken", "no u", "what?", "u wot", "hippo", "crab", "teddy", "Rettend", "PReiZy", "PReiZ", "javascript", "diep.io", "update"]
     word = random.choice(words)
-    word = list(word)
-    word = random.shuffle(word)
-    e = discord.Embed(title="", description=word, colour=0x607d8b)
+    text = list(word)
+    text = random.shuffle(text)
+    text = str(text)
+    e = discord.Embed(title="", description=f"*{text}*", colour=0x607d8b)
     await bot.say("**Try yourself!\nGet Ready!**")
     asyncio.sleep(1)
     await bot.say(embed=e)
-    await bot.wait_for_message(author=ctx.message.author, content=word)
-    await bot.send_message(ctx.message.channel, "**Correct!**")
+    await bot.wait_for_message(author=ctx.message.author, content=text)
+    await bot.send_message(ctx.message.channel, f"**The word was {word}**")
 
 @bot.command(pass_context=True)
 async def ping(ctx):
