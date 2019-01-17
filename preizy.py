@@ -4,7 +4,6 @@ from discord.ext import commands
 
 bot = commands.Bot(command_prefix='>>', description=None)
 message = discord.Message
-server = discord.Server
 member = discord.Member
 user = discord.User
 permissions = discord.Permissions
@@ -262,6 +261,16 @@ async def unlock(ctx, *, Reason=None):
     
 #--------------------------------------------------
 @bot.command(pass_context=True)
+async def dm(ctx, user : discord.User=None, *, text=None):
+    if user is None:
+        await bot.reply("**The usage is `>>dm {user} {message}`**")
+    elif text is None:
+        await bot.reply("**The usage is `>>dm {user} {message}`**")
+    else:
+        Private = await bot.start_private_message(user)
+        await bot.send_message(Private, f"**`Server: {server}`\n{message}**")    
+
+@bot.command(pass_context=True)
 async def shift(ctx):
     words = ["chicken", "no u", "what?", "u wot", "hippo", "crab", "teddy", "Rettend", "PReiZy", "PReiZ", "javascript", "diep.io", "update"]
     word = random.choice(words)
@@ -412,7 +421,7 @@ async def suggest(ctx, pref=None, *, text=None):
             if pref is "B":
                 msg = "BUGS"
             else:
-                bot.say("**Please use a valid prefix! The available prefixes: __Q__, __S__, __C__, __B__**")
+                bot.say("**Please use a valid prefix! The available prefixes: __Q__uestion, __S__uggestion, __C__ommand Suggestion, __B__ug report**")
         finally:
             colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
             col = random.choice(colours)
