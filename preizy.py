@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from time import gmtime
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix='>>', description=None)
+bot = commands.Bot(command_prefix='-', description=None)
 message = discord.Message
 member = discord.Member
 user = discord.User
@@ -61,11 +61,11 @@ async def on_channel_delete(channel):
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
     if user is None:
-        await bot.reply("**The usage is `>>ban {member} {0 - 7 amount of days to delete his messages} {Reason}`**")
+        await bot.reply("**The usage is `-ban {member} {0 - 7 amount of days to delete his messages} {Reason}`**")
     elif Reason is None:
-        await bot.reply("**The usage is `>>ban {member} {0 - 7 amount of days to delete his messages} {Reason}`**")
+        await bot.reply("**The usage is `-ban {member} {0 - 7 amount of days to delete his messages} {Reason}`**")
     elif Day is None:
-        await bot.reply("**The usage is `>>ban {member} {0 - 7 amount of days to delete his messages} {Reason}`**")
+        await bot.reply("**The usage is `-ban {member} {0 - 7 amount of days to delete his messages} {Reason}`**")
     else:
         if user.id == ctx.message.author.id:
             await bot.say("**I won't let you moderate yourself xD**")
@@ -89,9 +89,9 @@ async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, user : discord.User=None, *, Reason=None):
     if user is None:
-        await bot.reply("**The usage is `>>kick {member} {Reason}`**")
+        await bot.reply("**The usage is `-kick {member} {Reason}`**")
     elif Reason is None:
-        await bot.reply("**The usage is `>>kick {member} {Reason}`**")
+        await bot.reply("**The usage is `-kick {member} {Reason}`**")
     else:
         if user.id == ctx.message.author.id:
             await bot.say("**I won't let you moderate yourself xD**")
@@ -115,11 +115,11 @@ async def kick(ctx, user : discord.User=None, *, Reason=None):
 @commands.has_permissions(manage_messages=True)
 async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=None):
     if user is None:
-        await bot.reply("**The usage is '>>mute {member} {duration(in sec)} {Reason}`**")
+        await bot.reply("**The usage is '-mute {member} {duration(in sec)} {Reason}`**")
     elif Reason is None:
-        await bot.reply("**The usage is `>>mute {member} {duration(in sec)} {Reason}`**")
+        await bot.reply("**The usage is `-mute {member} {duration(in sec)} {Reason}`**")
     elif duration is None:
-        await bot.reply("**The usage is `>>mute {member} {duration(in sec)} {Reason}`**")
+        await bot.reply("**The usage is `-mute {member} {duration(in sec)} {Reason}`**")
     else:
         if user.id == ctx.message.author.id:
             await bot.say("**I won't let you moderate yourself xD**")
@@ -157,9 +157,9 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
 @commands.has_permissions(manage_messages=True)
 async def unmute(ctx, user : discord.User=None, *, Reason=None):
     if user is None:
-        await bot.reply("**The usage is `>>unmute {member} {Reason}`**")
+        await bot.reply("**The usage is `-unmute {member} {Reason}`**")
     elif Reason is None:
-        await bot.reply("**The usage is `>>unmute {member} {Reason}`**")
+        await bot.reply("**The usage is `-unmute {member} {Reason}`**")
     else:
         if user.id == ctx.message.author.id:
             await bot.say("**I won't let you moderate yourself xD**")
@@ -184,7 +184,7 @@ async def unmute(ctx, user : discord.User=None, *, Reason=None):
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, number : int=None):
     if number is None:
-        await bot.reply("**The usage is `>>clear {number of messages to delete}`**")
+        await bot.reply("**The usage is `-clear {number of messages to delete}`**")
     else:
         number += 1
         deleted = await bot.purge_from(ctx.message.channel, limit=number)
@@ -204,9 +204,9 @@ async def clear(ctx, number : int=None):
 @commands.has_permissions(manage_channels=True)
 async def lock(ctx, duration : int=None, *, Reason=None):
     if Reason is None:
-        await bot.reply("**The usage is `>>lock {duration (in sec)} {Reason}`**")
+        await bot.reply("**The usage is `-lock {duration (in sec)} {Reason}`**")
     elif duration is None:
-        await bot.reply("**The usage is `>>lock {duration (in sec)} {Reason}`**")
+        await bot.reply("**The usage is `-lock {duration (in sec)} {Reason}`**")
     else:
         Registered = discord.utils.get(ctx.message.server.roles, name="Member")
         overwrite = discord.PermissionOverwrite()
@@ -242,7 +242,7 @@ async def lock(ctx, duration : int=None, *, Reason=None):
 @commands.has_permissions(manage_channels=True)
 async def unlock(ctx, *, Reason=None):
     if Reason is None:
-        await bot.reply("**The usage is `>>unlock {Reason}`**")
+        await bot.reply("**The usage is `-unlock {Reason}`**")
     else:
         Registered = discord.utils.get(ctx.message.server.roles, name="Member")
         overwrite = discord.PermissionOverwrite()
@@ -263,9 +263,9 @@ async def unlock(ctx, *, Reason=None):
 @bot.command(pass_context=True)
 async def dm(ctx, user : discord.User=None, *, text=None):
     if user is None:
-        await bot.reply("**The usage is `>>dm {user} {message}`**")
+        await bot.reply("**The usage is `-dm {user} {message}`**")
     elif text is None:
-        await bot.reply("**The usage is `>>dm {user} {message}`**")
+        await bot.reply("**The usage is `-dm {user} {message}`**")
     else:
         Private = await bot.start_private_message(user)
         await bot.send_message(Private, f"**`Server: {server}`\n{message}**")    
@@ -317,9 +317,9 @@ async def say(ctx, *, words):
 @bot.command(pass_context=True)
 async def roll(ctx, x : int=None, y : int=None):
     if x is None:
-        await bot.reply("**The usage is `>>roll {number} {number}`**")
+        await bot.reply("**The usage is `-roll {number} {number}`**")
     elif y is None:
-        await bot.reply("**The usage is `>>roll {number} {number}`**")
+        await bot.reply("**The usage is `-roll {number} {number}`**")
     else:
         msg = random.randint(x, y)
         text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
@@ -329,9 +329,9 @@ async def roll(ctx, x : int=None, y : int=None):
 @bot.command(pass_context=True)
 async def sub(ctx, x : int=None, y : int=None):
     if x is None:
-        await bot.reply("**The usage is `>>sub {number} {number}`**")
+        await bot.reply("**The usage is `-sub {number} {number}`**")
     elif y is None:
-        await bot.reply("**The usage is `>>sub {number} {number}`**")
+        await bot.reply("**The usage is `-sub {number} {number}`**")
     else:
         msg = x - y
         text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
@@ -341,9 +341,9 @@ async def sub(ctx, x : int=None, y : int=None):
 @bot.command(pass_context=True)
 async def mul(ctx, x : int=None, y : int=None):
     if x is None:
-        await bot.reply("**The usage is `>>mul {number} {number}`**")
+        await bot.reply("**The usage is `-mul {number} {number}`**")
     elif y is None:
-        await bot.reply("**The usage is `>>mul {number} {number}`**")
+        await bot.reply("**The usage is `-mul {number} {number}`**")
     else:
         msg = x * y
         text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
@@ -353,9 +353,9 @@ async def mul(ctx, x : int=None, y : int=None):
 @bot.command(pass_context=True)
 async def div(ctx, x : int=None, y : int=None):
     if x is None:
-        await bot.reply("**The usage is `>>div {number} {number}`**")
+        await bot.reply("**The usage is `-div {number} {number}`**")
     elif y is None:
-        await bot.reply("**The usage is `>>div {number} {number}`**")
+        await bot.reply("**The usage is `-div {number} {number}`**")
     else:
         msg = x / y
         text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
@@ -365,9 +365,9 @@ async def div(ctx, x : int=None, y : int=None):
 @bot.command(pass_context=True)
 async def exp(ctx, x : int=None, y : int=None):
     if x is None:
-        await bot.reply("**The usage is `>>exp {number} {number}`**")
+        await bot.reply("**The usage is `-exp {number} {number}`**")
     elif y is None:
-        await bot.reply("**The usage is `>>exp {number} {number}`**")
+        await bot.reply("**The usage is `-exp {number} {number}`**")
     else:
         msg = x ** y
         text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
@@ -377,9 +377,9 @@ async def exp(ctx, x : int=None, y : int=None):
 @bot.command(pass_context=True)
 async def add(ctx, x : int=None, y : int=None):
     if x is None:
-        await bot.reply("**The usage is `>>add {number} {number}`**")
+        await bot.reply("**The usage is `-add {number} {number}`**")
     elif y is None:
-        await bot.reply("**The usage is `>>add {number} {number}`**")
+        await bot.reply("**The usage is `-add {number} {number}`**")
     else:
         msg = x + y
         text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
@@ -389,7 +389,7 @@ async def add(ctx, x : int=None, y : int=None):
 @bot.command()
 async def game(*, play=None):
     if play is None:
-        await bot.reply("**The usage is `>>game {Something to set as a game}`**")
+        await bot.reply("**The usage is `-game {Something to set as a game}`**")
     else:
         await bot.change_presence(game=discord.Game(name=play))
         em = discord.Embed(title="Game Status", description=f"Game status changed to __{play}__!", colour=0x3498db)
@@ -398,7 +398,7 @@ async def game(*, play=None):
 @bot.command(pass_context=True)
 async def nick(ctx, *, name=None):
     if name is None:
-        await bot.reply("**The usage is `>>name {Something to set as your name}`**")
+        await bot.reply("**The usage is `-name {Something to set as your name}`**")
     else:
         await bot.change_nickname(ctx.message.author, name)
         em = discord.Embed(title="Nickname", description=f"{ctx.message.author}'s nick set to __{name}__!", colour=0x3498db)
@@ -407,9 +407,9 @@ async def nick(ctx, *, name=None):
 @bot.command(pass_context=True)
 async def suggest(ctx, pref=None, *, text=None):
     if pref is None:
-        await bot.reply("**The usage is `>>suggest {prefix (Q, S, C, B)} {text}`**")
+        await bot.reply("**The usage is `-suggest {prefix (Q, S, C, B)} {text}`**")
     elif text is None:
-        await bot.reply("**The usage is `>>suggest {prefix (Q, S, C, B)} {text}`**")
+        await bot.reply("**The usage is `-suggest {prefix (Q, S, C, B)} {text}`**")
     else:
         try:
             if pref is "S":
@@ -442,9 +442,9 @@ async def suggest(ctx, pref=None, *, text=None):
 @bot.command(pass_context=True)
 async def poll(ctx, options: str=None, *, question=None):
     if options is None:
-        await bot.reply("**The usage is `>>poll {options (2-10)} {Question or Suggestion}`**")
+        await bot.reply("**The usage is `-poll {options (2-10)} {Question or Suggestion}`**")
     elif question is None:
-        await bot.reply("**The usage is `>>poll {options (2-10)} {Question or Suggestion}`**")
+        await bot.reply("**The usage is `-poll {options (2-10)} {Question or Suggestion}`**")
     else:
         if len(options) <= 1:
             await bot.say('You need more than one option to make a poll!')
@@ -467,7 +467,7 @@ async def poll(ctx, options: str=None, *, question=None):
 
 @bot.event
 async def on_message(message):
-    if message.content.startswith('>>8ball'):
+    if message.content.startswith('-8ball'):
         await bot.send_message(message.channel, random.choice(['**It is certain :8ball:**',
                                                               '**It is decidedly so :8ball:**',
                                                               '**Without a doubt :8ball:**',
@@ -495,53 +495,53 @@ async def on_message(message):
                                                               '**o** :8ball:',
                                                               '**ask it to PReiZ** :8ball:',
                                                               '***REEEE* :8ball:**',]))
-    if message.content.startswith(">>time"):
+    if message.content.startswith("-time"):
         timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
-    if message.content.startswith(">>mod"):
+    if message.content.startswith("-mod"):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
-        em.add_field(name="Admin commands", value=":notepad_spiral: >>ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
+        em.add_field(name="Admin commands", value=":notepad_spiral: -ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
                      ":bulb: Kicks the user and removes his messages for the given days, the user can't rejoin, until he gots unbanned\n"
                      "\n"
                      ":notepad_spiral: The Unban command doesn't works, sorry about that. You need to unban the user from `Server Settings->Bans`\n"
                      ":bulb: UnBans the Banned user, the user now can rejoin by instant-invite links\n\n\n")
-        em.add_field(name="Mod commands", value=":notepad_spiral: >>kick {member} \"{Reason}\"\n"
+        em.add_field(name="Mod commands", value=":notepad_spiral: -kick {member} \"{Reason}\"\n"
                      ":bulb: Kicks the user from the server, the user can rejoin by instant-invite links\n"
                      "\n"
-                     ":notepad_spiral: >>mute {member} {duration(in sec)} \"{Reason}\"\n"
+                     ":notepad_spiral: -mute {member} {duration(in sec)} \"{Reason}\"\n"
                      ":bulb: Mutes the user, this user can't send messages for the given duration, if the _time is up,_ he will auto get unmuted\n"
                      "\n"
-                     ":notepad_spiral: >>unmute {member} \"{Reason}\"\n"
+                     ":notepad_spiral: -unmute {member} \"{Reason}\"\n"
                      ":bulb: UnMutes the Muted user, this user now allowed to send messages\n"
                      "\n"
-                     ":notepad_spiral: >>lock \"{Reason}\"\n"
+                     ":notepad_spiral: -lock \"{Reason}\"\n"
                      ":bulb: Locks down the currently channel, only Admins can send messages until an unlock\n"
                      "\n"
-                     ":notepad_spiral: >>unlock \"{Reason}\"\n"
+                     ":notepad_spiral: -unlock \"{Reason}\"\n"
                      ":bulb: Unlocks the currently locked channel, now everyone can send messages there")
         await bot.send_message(message.channel, embed=em)
-    if message.content.startswith(">>commands"):
+    if message.content.startswith("-commands"):
         emb = discord.Embed(title="COMMANDS", description="Check my commands!", colour=0x95a5a6)
-        emb.add_field(name='------------------------', value=":notepad_spiral:  >>commands\n"
+        emb.add_field(name='------------------------', value=":notepad_spiral:  -commands\n"
                       "Shows this message\n"
                       "\n"
-                      ":notepad_spiral: >>help\n"
+                      ":notepad_spiral: -help\n"
                       "\n"
-                      ":notepad_spiral: >>tag\n"
+                      ":notepad_spiral: -tag\n"
                       "\n"
-                      ":notepad_spiral: >>nick {name}\n"
+                      ":notepad_spiral: -nick {name}\n"
                       ":bulb: Set your nickname\n"
                       "\n"
-                      ":notepad_spiral: >>time\n"
+                      ":notepad_spiral: -time\n"
                       ":bulb: Returns the real time in UTC+0!\n"
                       "\n"
-                      ":notepad_spiral: >>game {game}\n"
+                      ":notepad_spiral: -game {game}\n"
                       ":bulb: Set a game for the Bot\n"
                       "\n"
-                      ":notepad_spiral: >>mod\n"
+                      ":notepad_spiral: -mod\n"
                       ":bulb: The Moderation commands\n"
                       "\n"
-                      ":notepad_spiral: >>8ball\n"
+                      ":notepad_spiral: -8ball\n"
                       ":bulb: Get answer (or not :>  ) to your question", inline=True)
         emb.set_thumbnail(url="https://cdn.discordapp.com/avatars/450246060456148993/b9fc7c3ec4dc905cc575ab313a7dba0c.webp?size=2048")
         emb.set_footer(text='------------------------')
