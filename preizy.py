@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from time import gmtime
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix='-', description=None)
+bot = commands.Bot(command_prefix='!', description=None)
 message = discord.Message
 member = discord.Member
 user = discord.User
