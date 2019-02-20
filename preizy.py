@@ -7,52 +7,73 @@ message = discord.Message
 member = discord.Member
 user = discord.User
 permissions = discord.Permissions
-"""
-Write this when you need the command's triggered time in UTC
-
-timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
+Delete_LogRoom = bot.get_channel(id="411836724117897218")
+LogRoom = bot.get_channel(id="412146516246003723")
+Join_LogRoom = bot.get_channel(id="413272273433133066")
+Nick_LogRoom = bot.get_channel(id="412148671577063424")
+timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+botserver = bot.get_server(id="411833498207256576")
 
 @bot.event
 async def on_ready():
-    print('Logged in as')
-    print(bot.user.name)
-    print(bot.user.id)
-    print('------')
+    print('Let\'s GO!')
     await bot.change_presence(game=discord.Game(name="diep.io"))
 #----------------------Stats-----------------------
 @bot.listen()
+async def on_member_update(before, after):
+    e = discord.Embed(title="MEMBER UPDATE", description="", colour="0xe67e22")
+    e.add_field(name="User", value=f"{message.author}")
+    e.add_field(name="Before", value=f"```autohotkey\n{before}\n```")
+    e.add_field(name="After", value=f"```autohotkey\n{after}\n```")
+    e.set_footer(text=timer)
+    await bot.send_message(Nick_LogRoom, embed=e)
+
+@bot.listen()
+async def on_message_delete(message):
+    e = discord.Embed(title="DELETE", description="", colour="0xe67e22")
+    e.add_field(name="User", value=f"{message.author}")
+    e.add_field(name="Message", value=f"```autohotkey\n{message}\n```")
+    e.set_footer(text=timer)
+    await bot.send_message(Delete_LogRoom, embed=e)
+
+@bot.listen()
+async def on_message_edit(before, after):
+    e = discord.Embed(title="EDIT", description="", colour="0xe67e22")
+    e.add_field(name="User", value=f"{message.author}")
+    e.add_field(name="Before", value=f"```autohotkey\n{before}\n```")
+    e.add_field(name="After", value=f"```autohotkey\n{after}\n```")
+    e.set_footer(text=timer)
+    await bot.send_message(Delete_LogRoom, embed=e)
+
+@bot.listen()
 async def on_member_join(member):
-    botserver = bot.get_server(id="411833498207256576")
     membersroom = bot.get_channel(id="460456526449082378")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
+    await bot.send_message(Join_LogRoom, f"**{member.name} has joined the server**")
 
 @bot.listen()
 async def on_member_remove(member):
-    botserver = bot.get_server(id="411833498207256576")
     membersroom = bot.get_channel(id="460456526449082378")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
+    await bot.send_message(Join_LogRoom, f"**{member.name} has left the server**")
 
 @bot.event
 async def on_server_role_create(role):
-    botserver = bot.get_server(id="411833498207256576")
     rolesroom = bot.get_channel(id="460456598473670696")
     await bot.edit_channel(rolesroom, name=f"🔴Roles: {len(botserver.roles)}")  
 
 @bot.event
 async def on_server_role_delete(role):
-    botserver = bot.get_server(id="411833498207256576")
     rolesroom = bot.get_channel(id="460456598473670696")
     await bot.edit_channel(rolesroom, name=f"🔴Roles: {len(botserver.roles)}")  
 
 @bot.event
 async def on_channel_create(channel):
-    botserver = bot.get_server(id="411833498207256576")
     channelsroom = bot.get_channel(id="460456375999266826")
     await bot.edit_channel(channelsroom, name=f"🔵Channels: {len(botserver.channels)}")
 
 @bot.event
 async def on_channel_delete(channel):
-    botserver = bot.get_server(id="411833498207256576")
     channelsroom = bot.get_channel(id="460456375999266826")
     await bot.edit_channel(channelsroom, name=f"🔵Channels: {len(botserver.channels)}")
 
@@ -78,7 +99,7 @@ async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
-            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            em.set_author(name=user.name, icon_url=user.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
@@ -104,7 +125,7 @@ async def kick(ctx, user : discord.User=None, *, Reason=None):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
-            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            em.set_author(name=user.name, icon_url=user.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
@@ -134,7 +155,7 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
             em.add_field(name="Duration", value=f"{duration} sec")
-            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            em.set_author(name=user.name, icon_url=user.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
@@ -146,7 +167,7 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value="Time is up...")
-            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            em.set_author(name=user.name, icon_url=user.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
@@ -173,7 +194,7 @@ async def unmute(ctx, user : discord.User=None, *, Reason=None):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
-            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            em.set_author(name=user.name, icon_url=user.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
@@ -184,7 +205,7 @@ async def unmute(ctx, user : discord.User=None, *, Reason=None):
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, number : int=None):
     if number is None:
-        await bot.reply("**The usage is `-clear {number of messages to delete}`**")
+        number = 1
     else:
         number += 1
         deleted = await bot.purge_from(ctx.message.channel, limit=number)
@@ -269,21 +290,6 @@ async def dm(ctx, user : discord.User=None, *, text=None):
     else:
         Private = await bot.start_private_message(user)
         await bot.send_message(Private, f"**`Server: {server}`\n{message}**")    
-
-@bot.command(pass_context=True)
-async def shift(ctx):
-    words = ["chicken", "no u", "what?", "u wot", "hippo", "crab", "teddy", "Rettend", "PReiZy", "PReiZ", "javascript", "diep.io", "update"]
-    word = random.choice(words)
-    text = list(word)
-    random.shuffle(text)
-    text = re.sub("[,]'", "", text)
-    text = str(text)
-    e = discord.Embed(title="", description=f"*{text}*", colour=0x607d8b)
-    await bot.say("**Try yourself!\nGet Ready!**")
-    asyncio.sleep(2)
-    await bot.say(embed=e)
-    await bot.wait_for_message(author=ctx.message.author, content=text)
-    await bot.send_message(ctx.message.channel, f"**The word was {word}**")
 
 @bot.command(pass_context=True)
 async def tag(ctx):
@@ -438,35 +444,23 @@ async def suggest(ctx, pref=None, *, text=None):
             if pref is "C":
                 await bot.add_reaction(mesg, "👍")
                 await bot.add_reaction(mesg, "👎")
-            
-@bot.command(pass_context=True)
-async def poll(ctx, options: str=None, *, question=None):
-    if options is None:
-        await bot.reply("**The usage is `-poll {options (2-10)} {Question or Suggestion}`**")
-    elif question is None:
-        await bot.reply("**The usage is `-poll {options (2-10)} {Question or Suggestion}`**")
-    else:
-        if len(options) <= 1:
-            await bot.say('You need more than one option to make a poll!')
-            return
-        if len(options) > 10:
-            await bot.say('You cannot make a poll for more than 10 things!')
-            return
-        if len(options) == 2:
-            reactions = ['👍', '👎']
-        else:
-            reactions = ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟']
-        description = []
-        for x, option in enumerate(options):
-            description += '\n {} {}'.format(reactions[x], option)
-        embed = discord.Embed(title=question, description=''.join(description), colour=0x3498db)
-        react_message = await bot.say(embed=embed)
-        for reaction in reactions[:len(options)]:
-            await bot.add_reaction(react_message, reaction)
-        await bot.edit_message(react_message, embed=embed)
 
 @bot.event
 async def on_message(message):
+    if message.content.startswith('r-lenny'):
+        ears = ['q{}p', 'ʢ{}ʡ', '⸮{}?', 'ʕ{}ʔ', 'ᖗ{}ᖘ', 'ᕦ{}ᕥ', 'ᕦ({})ᕥ', 'ᕙ({})ᕗ', 'ᘳ{}ᘰ', 'ᕮ{}ᕭ', 'ᕳ{}ᕲ', '({})', '[{}]', '୧{}୨', '୨{}୧', '⤜({})⤏', '☞{}☞', 'ᑫ{}ᑷ', 'ᑴ{}ᑷ', 'ヽ({})ﾉ', '乁({})ㄏ', '└[{}]┘', '(づ{})づ', '(ง{})ง', '|{}|']
+        eyes = ['⌐■{}■', ' ͠°{} °', '⇀{}↼', '´• {} •`', '´{}`', '`{}´', 'ó{}ò', 'ò{}ó', '>{}<', 'Ƹ̵̡ {}Ʒ', 'ᗒ{}ᗕ', '⪧{}⪦', '⪦{}⪧', '⪩{}⪨', '⪨{}⪩', '⪰{}⪯', '⫑{}⫒', '⨴{}⨵', "⩿{}⪀", "⩾{}⩽", "⩺{}⩹", "⩹{}⩺", "◥▶{}◀◤", "≋{}≋", "૦ઁ{}૦ઁ", "  ͯ{}  ͯ", "  ̿{}  ̿", "  ͌{}  ͌", "ළ{}ළ", "◉{}◉", "☉{}☉", "・{}・", "▰{}▰", "ᵔ{}ᵔ", "□{}□", "☼{}☼", "*{}*", "⚆{}⚆", "⊜{}⊜", ">{}>", "❍{}❍", "￣{}￣", "─{}─", "✿{}✿", "•{}•", "T{}T", "^{}^", "ⱺ{}ⱺ", "@{}@", "ȍ{}ȍ", "x{}x", "-{}-", "${}$", "Ȍ{}Ȍ", "ʘ{}ʘ", "Ꝋ{}Ꝋ", "๏{}๏", "■{}■", "◕{}◕", "◔{}◔", "✧{}✧", "♥{}♥", " ͡°{} ͡°", "¬{}¬", " º {} º ", "⍜{}⍜", "⍤{}⍤", "ᴗ{}ᴗ", "ಠ{}ಠ", "σ{}σ"]
+        mouth = ['v', 'ᴥ', 'ᗝ', 'Ѡ', 'ᗜ', 'Ꮂ', 'ヮ', '╭͜ʖ╮', ' ͟ل͜', ' ͜ʖ', ' ͟ʖ', ' ʖ̯', 'ω', '³', ' ε ', '﹏', 'ل͜', '╭╮', '‿‿', '▾', '‸', 'Д', '∀', '!', '人', '.', 'ロ', '_', '෴', 'ѽ', 'ഌ', '⏏', 'ツ', '益']
+        lenny = random.choice(ears).format(random.choice(eyes)).format(random.choice(mouth))
+        await bot.send_message(message.channel, "**A wild Lenny has appeard:**\n\n\t" + lenny)
+    if message.content.startswith('r-oof'):
+        o = ['o00', 'oo', 'oO', 'o0', 'Oo', '0o', 'OOo', 'O0o', 'ooO', 'oo0', 'oo0oO', 'o0o', '0ooO', 'oo0oOO', 'ooo', '0oo', 'oooo', 'Ooo0', 'O0oo', 'ooo0', ]
+        f = ['f', 'ff', 'fff']
+        mark = ['!', '!!', '!!', '!1', '!!1', '!1!!', '1!!!', '!1!1!', '1!', '!!1!', '!!!1!', '!!!!', '!11!']
+        msg1 = random.choice(o)
+        msg2 = random.choice(f)
+        msg3 = random.choice(mark)
+        await bot.send_message(message.channel, msg1 + msg2 + msg3)
     if message.content.startswith('-8ball'):
         await bot.send_message(message.channel, random.choice(['**It is certain :8ball:**',
                                                               '**It is decidedly so :8ball:**',
