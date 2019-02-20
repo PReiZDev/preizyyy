@@ -3,13 +3,10 @@ from time import gmtime
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='-', description=None)
-message = discord.Message
-member = discord.Member
-user = discord.User
-permissions = discord.Permissions
 Delete_LogRoom = bot.get_channel(id="411836724117897218")
 LogRoom = bot.get_channel(id="412146516246003723")
 Join_LogRoom = bot.get_channel(id="413272273433133066")
+botserver = bot.get_server(id="411833498207256576")
 timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
 
 @bot.event
@@ -91,6 +88,7 @@ async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
             await bot.say("**I won't let you moderate yourself xD**")
         else:
             room = ctx.message.channel
+            botserver = bot.get_server(id="411833498207256576")
             await bot.ban(user, delete_message_days=Day)
             LogRoom = bot.get_channel(id="412146516246003723")
             await bot.say(f"**{user.mention} got banned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
@@ -103,7 +101,7 @@ async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             Private = await bot.start_private_message(user)
-            await bot.send_message(Private, f"**`Server: {server}`\nBAMM!! You got banned!**")
+            await bot.send_message(Private, f"**`Server: {botserver}`\nBAMM!! You got banned!**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
@@ -117,6 +115,7 @@ async def kick(ctx, user : discord.User=None, *, Reason=None):
             await bot.say("**I won't let you moderate yourself xD**")
         else:
             room = ctx.message.channel
+            botserver = bot.get_server(id="411833498207256576")
             await bot.kick(user)
             LogRoom = bot.get_channel(id="412146516246003723")
             await bot.say(f"**{user.mention} got Kicked by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
@@ -129,7 +128,7 @@ async def kick(ctx, user : discord.User=None, *, Reason=None):
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             Private = await bot.start_private_message(user)
-            await bot.send_message(Private, f"**`Server: {server}`\nHey! You got kicked, bai bai!**")
+            await bot.send_message(Private, f"**`Server: {botserver}`\nHey! You got kicked, bai bai!**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
@@ -145,6 +144,7 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             await bot.say("**I won't let you moderate yourself xD**")
         else:
             LogRoom = bot.get_channel(id="412146516246003723")
+            botserver = bot.get_server(id="411833498207256576")
             room = ctx.message.channel
             MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
             await bot.add_roles(user, MutedRole)
@@ -159,7 +159,7 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             Private = await bot.start_private_message(user)
-            await bot.send_message(Private, f"**`Server: {PRserver}`\nRoses are red, violets are blue and {user.mention} is muted!**")
+            await bot.send_message(Private, f"**`Server: {botserver}`\nRoses are red, violets are blue and {user.mention} is muted!**")
             await asyncio.sleep(duration)
             await bot.remove_roles(user, MutedRole)
             em = discord.Embed(title="UNMUTE", description=None, colour=0x1abc9c)
@@ -171,7 +171,7 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             Private = await bot.start_private_message(user)
-            await bot.send_message(Private, f"**`Server: {server}`\nHey! You got unmuted, dont get too excited..**")
+            await bot.send_message(Private, f"**`Server: {botserver}`\nHey! You got unmuted, dont get too excited..**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
@@ -185,6 +185,7 @@ async def unmute(ctx, user : discord.User=None, *, Reason=None):
             await bot.say("**I won't let you moderate yourself xD**")
         else:
             LogRoom = bot.get_channel(id="412146516246003723")
+            botserver = bot.get_server(id="411833498207256576")
             room = ctx.message.channel
             MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
             await bot.remove_roles(user, MutedRole)
@@ -198,7 +199,7 @@ async def unmute(ctx, user : discord.User=None, *, Reason=None):
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             Private = await bot.start_private_message(user)
-            await bot.send_message(Private, f"**`Server: {server}`\nHey! You got unmuted, dont get too excited..**")
+            await bot.send_message(Private, f"**`Server: {botserver}`\nHey! You got unmuted, dont get too excited..**")
         
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
@@ -288,7 +289,7 @@ async def dm(ctx, user : discord.User=None, *, text=None):
         await bot.reply("**The usage is `-dm {user} {message}`**")
     else:
         Private = await bot.start_private_message(user)
-        await bot.send_message(Private, f"**`Server: {server}`\n{message}**")    
+        await bot.send_message(Private, f"**`Server: {botserver}`\n{message}**")    
 
 @bot.command(pass_context=True)
 async def tag(ctx):
