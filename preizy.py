@@ -19,6 +19,7 @@ async def on_message_delete(message):
     Delete_LogRoom = bot.get_channel(id="411836724117897218")
     e = discord.Embed(title="DELETE", description="", colour=0xe74c3c)
     e.add_field(name="User", value=f"{message.author}")
+    e.add_field(name="Channel", value=f"{message.channel}")
     e.add_field(name="Message", value=f"```autohotkey\n{message.content}\n```")
     e.set_footer(text=timer)
     await bot.send_message(Delete_LogRoom, embed=e)
