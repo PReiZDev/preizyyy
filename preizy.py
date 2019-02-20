@@ -413,12 +413,16 @@ async def nick(ctx, *, name=None):
     
 @bot.command(pass_context=True)
 async def suggest(ctx, pref=None, *, text=None):
+    channel = bot.get_channel(id="426733808205692928")
     if pref is None:
-        await bot.reply("**The usage is `-suggest {prefix (Q, S, C, B)} {text}`**")
+        await bot.reply("**The usage is `-suggest {prefix (I, Q, S, C, B)} {text}`**")
     elif text is None:
-        await bot.reply("**The usage is `-suggest {prefix (Q, S, C, B)} {text}`**")
+        await bot.reply("**The usage is `-suggest {prefix (I, Q, S, C, B)} {text}`**")
     else:
         try:
+            if pref is "I":
+                msg = "IDEA"
+                channel = bot.get_channel(id="547819227290271754")
             if pref is "S":
                 msg = "SUGGESTION"
             if pref is "Q":
@@ -428,7 +432,7 @@ async def suggest(ctx, pref=None, *, text=None):
             if pref is "B":
                 msg = "BUGS"
             else:
-                bot.say("**Please use a valid prefix! The available prefixes: __Q__uestion, __S__uggestion, __C__ommand Suggestion, __B__ug report**")
+                bot.say("**Please use a valid prefix! The available prefixes: __I__dea, __Q__uestion, __S__uggestion, __C__ommand Suggestion, __B__ug report**")
         finally:
             colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
             col = random.choice(colours)
@@ -436,13 +440,15 @@ async def suggest(ctx, pref=None, *, text=None):
             em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
-            channel = bot.get_channel(id="426733808205692928")
             await bot.send_message(ctx.message.channel, f"**:white_check_mark: Sent in {channel.mention}**")
             mesg = await bot.send_message(channel, embed=em)
             if pref is "S":
                 await bot.add_reaction(mesg, "👍")
                 await bot.add_reaction(mesg, "👎")
             if pref is "C":
+                await bot.add_reaction(mesg, "👍")
+                await bot.add_reaction(mesg, "👎")
+            if pref is "I":
                 await bot.add_reaction(mesg, "👍")
                 await bot.add_reaction(mesg, "👎")
 
