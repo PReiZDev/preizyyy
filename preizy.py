@@ -23,7 +23,7 @@ async def on_message_delete(message):
     e.set_footer(text=timer)
     await bot.send_message(Delete_LogRoom, embed=e)
 
-@bot.listen()
+"""@bot.listen()
 async def on_message_edit(before, after):
     Delete_LogRoom = bot.get_channel(id="411836724117897218")
     e = discord.Embed(title="EDIT", description="", colour=0xe67e22)
@@ -31,7 +31,7 @@ async def on_message_edit(before, after):
     e.add_field(name="Before", value=f"```autohotkey\n{before.content}\n```")
     e.add_field(name="After", value=f"```autohotkey\n{after.content}\n```")
     e.set_footer(text=timer)
-    await bot.send_message(Delete_LogRoom, embed=e)
+    await bot.send_message(Delete_LogRoom, embed=e)"""
 
 @bot.listen()
 async def on_member_join(member):
