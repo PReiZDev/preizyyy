@@ -17,9 +17,9 @@ async def on_ready():
 @bot.listen()
 async def on_message_delete(message):
     Delete_LogRoom = bot.get_channel(id="411836724117897218")
-    e = discord.Embed(title="DELETE", description="", colour=0xe67e22)
+    e = discord.Embed(title="DELETE", description="", colour=0xe74c3c)
     e.add_field(name="User", value=f"{message.author}")
-    e.add_field(name="Message", value=f"```autohotkey\n{message}\n```")
+    e.add_field(name="Message", value=f"```autohotkey\n{message.content}\n```")
     e.set_footer(text=timer)
     await bot.send_message(Delete_LogRoom, embed=e)
 
@@ -27,9 +27,9 @@ async def on_message_delete(message):
 async def on_message_edit(before, after):
     Delete_LogRoom = bot.get_channel(id="411836724117897218")
     e = discord.Embed(title="EDIT", description="", colour=0xe67e22)
-    e.add_field(name="User", value=f"{message.author}")
-    e.add_field(name="Before", value=f"```autohotkey\n{before}\n```")
-    e.add_field(name="After", value=f"```autohotkey\n{after}\n```")
+    e.add_field(name="User", value=f"{before.author}")
+    e.add_field(name="Before", value=f"```autohotkey\n{before.content}\n```")
+    e.add_field(name="After", value=f"```autohotkey\n{after.content}\n```")
     e.set_footer(text=timer)
     await bot.send_message(Delete_LogRoom, embed=e)
 
