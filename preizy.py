@@ -21,7 +21,7 @@ async def on_ready():
 #----------------------Stats-----------------------
 @bot.listen()
 async def on_member_update(before, after):
-    e = discord.Embed(title="MEMBER UPDATE", description="", colour="0xe67e22")
+    e = discord.Embed(title="MEMBER UPDATE", description="", colour=0xe67e22)
     e.add_field(name="User", value=f"{message.author}")
     e.add_field(name="Before", value=f"```autohotkey\n{before}\n```")
     e.add_field(name="After", value=f"```autohotkey\n{after}\n```")
@@ -30,7 +30,7 @@ async def on_member_update(before, after):
 
 @bot.listen()
 async def on_message_delete(message):
-    e = discord.Embed(title="DELETE", description="", colour="0xe67e22")
+    e = discord.Embed(title="DELETE", description="", colour=0xe67e22)
     e.add_field(name="User", value=f"{message.author}")
     e.add_field(name="Message", value=f"```autohotkey\n{message}\n```")
     e.set_footer(text=timer)
@@ -38,7 +38,7 @@ async def on_message_delete(message):
 
 @bot.listen()
 async def on_message_edit(before, after):
-    e = discord.Embed(title="EDIT", description="", colour="0xe67e22")
+    e = discord.Embed(title="EDIT", description="", colour=0xe67e22)
     e.add_field(name="User", value=f"{message.author}")
     e.add_field(name="Before", value=f"```autohotkey\n{before}\n```")
     e.add_field(name="After", value=f"```autohotkey\n{after}\n```")
