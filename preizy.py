@@ -39,7 +39,7 @@ async def on_member_join(member):
     botserver = bot.get_server(id="411833498207256576")
     membersroom = bot.get_channel(id="460456526449082378")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
-    await bot.send_message(Join_LogRoom, f"**{member.name} has joined the server**")
+    await bot.send_message(Join_LogRoom, f"**{member.name}** has joined the server")
 
 @bot.listen()
 async def on_member_remove(member):
@@ -47,7 +47,7 @@ async def on_member_remove(member):
     botserver = bot.get_server(id="411833498207256576")
     membersroom = bot.get_channel(id="460456526449082378")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
-    await bot.send_message(Join_LogRoom, f"**{member.name} has left the server**")
+    await bot.send_message(Join_LogRoom, f"**{member.name}** has left the server")
 
 @bot.event
 async def on_server_role_create(role):
