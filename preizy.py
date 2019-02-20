@@ -10,9 +10,7 @@ permissions = discord.Permissions
 Delete_LogRoom = bot.get_channel(id="411836724117897218")
 LogRoom = bot.get_channel(id="412146516246003723")
 Join_LogRoom = bot.get_channel(id="413272273433133066")
-Nick_LogRoom = bot.get_channel(id="412148671577063424")
 timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-botserver = bot.get_server(id="411833498207256576")
 
 @bot.event
 async def on_ready():
@@ -20,16 +18,8 @@ async def on_ready():
     await bot.change_presence(game=discord.Game(name="diep.io"))
 #----------------------Stats-----------------------
 @bot.listen()
-async def on_member_update(before, after):
-    e = discord.Embed(title="MEMBER UPDATE", description="", colour=0xe67e22)
-    e.add_field(name="User", value=f"{message.author}")
-    e.add_field(name="Before", value=f"```autohotkey\n{before}\n```")
-    e.add_field(name="After", value=f"```autohotkey\n{after}\n```")
-    e.set_footer(text=timer)
-    await bot.send_message(Nick_LogRoom, embed=e)
-
-@bot.listen()
 async def on_message_delete(message):
+    Delete_LogRoom = bot.get_channel(id="411836724117897218")
     e = discord.Embed(title="DELETE", description="", colour=0xe67e22)
     e.add_field(name="User", value=f"{message.author}")
     e.add_field(name="Message", value=f"```autohotkey\n{message}\n```")
@@ -38,6 +28,7 @@ async def on_message_delete(message):
 
 @bot.listen()
 async def on_message_edit(before, after):
+    Delete_LogRoom = bot.get_channel(id="411836724117897218")
     e = discord.Embed(title="EDIT", description="", colour=0xe67e22)
     e.add_field(name="User", value=f"{message.author}")
     e.add_field(name="Before", value=f"```autohotkey\n{before}\n```")
@@ -47,33 +38,41 @@ async def on_message_edit(before, after):
 
 @bot.listen()
 async def on_member_join(member):
+    Join_LogRoom = bot.get_channel(id="413272273433133066")
+    botserver = bot.get_server(id="411833498207256576")
     membersroom = bot.get_channel(id="460456526449082378")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
     await bot.send_message(Join_LogRoom, f"**{member.name} has joined the server**")
 
 @bot.listen()
 async def on_member_remove(member):
+    Join_LogRoom = bot.get_channel(id="413272273433133066")
+    botserver = bot.get_server(id="411833498207256576")
     membersroom = bot.get_channel(id="460456526449082378")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
     await bot.send_message(Join_LogRoom, f"**{member.name} has left the server**")
 
 @bot.event
 async def on_server_role_create(role):
+    botserver = bot.get_server(id="411833498207256576")
     rolesroom = bot.get_channel(id="460456598473670696")
     await bot.edit_channel(rolesroom, name=f"🔴Roles: {len(botserver.roles)}")  
 
 @bot.event
 async def on_server_role_delete(role):
+    botserver = bot.get_server(id="411833498207256576")
     rolesroom = bot.get_channel(id="460456598473670696")
     await bot.edit_channel(rolesroom, name=f"🔴Roles: {len(botserver.roles)}")  
 
 @bot.event
 async def on_channel_create(channel):
+    botserver = bot.get_server(id="411833498207256576")
     channelsroom = bot.get_channel(id="460456375999266826")
     await bot.edit_channel(channelsroom, name=f"🔵Channels: {len(botserver.channels)}")
 
 @bot.event
 async def on_channel_delete(channel):
+    botserver = bot.get_server(id="411833498207256576")
     channelsroom = bot.get_channel(id="460456375999266826")
     await bot.edit_channel(channelsroom, name=f"🔵Channels: {len(botserver.channels)}")
 
