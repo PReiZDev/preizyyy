@@ -13,6 +13,31 @@ timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
 async def on_ready():
     print('Let\'s GO!')
     await bot.change_presence(game=discord.Game(name="diep.io"))
+    
+# define database
+conn = lite.connect("my_database.db")
+cursor = conn.cursor()
+# get stored object from database
+sql = "SELECT * FROM my_table WHERE field_1=?"
+cursor.execute(sql, [(value_1)])
+data = cursor.fetchall()
+# if object does not exist, create it
+if len(data) == 0:
+    sql = "INSERT INTO my_table VALUES (?, ?)"
+    cursor.execute(sql, [(value_1), (value_2)])
+# if stored object exist and we need update it
+elif ...:
+    sql = "UPDATE my_table SET field_2 = ? WHERE field_1 = ?"
+    cursor.execute(sql, [(value_2), (value_1)])
+else:
+    # get data from first object
+    value_of_field_1 = data[0][0]
+    # get data from third object
+    value_of_field_2 = data[2][1]
+# close database connection
+conn.commit()
+conn.close()
+
 #----------------------Stats-----------------------
 @bot.listen()
 async def on_message_delete(message):
