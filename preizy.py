@@ -14,7 +14,7 @@ async def on_ready():
     print('Let\'s GO!')
     await bot.change_presence(game=discord.Game(name="diep.io"))
     
-"""# define database
+# define database
 conn = lite.connect("my_database.db")
 cursor = conn.cursor()
 # get stored object from database
@@ -36,7 +36,7 @@ else:
     value_of_field_2 = data[2][1]
 # close database connection
 conn.commit()
-conn.close()"""
+conn.close()
 
 #----------------------Stats-----------------------
 @bot.listen()
